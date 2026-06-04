@@ -78,14 +78,39 @@ const CatchyHeroText = () => {
 export const CoverPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setIsSubmitted(false);
-    }, 3000);
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.target);
+    formData.append("access_key", "cb85c227-95a8-4e45-9fc6-4607dc2a800c");
+    formData.append("subject", "New Consultation Request - Grubix Media Website");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
+          setIsSubmitted(false);
+        }, 3000);
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error submitting form. Please check your connection.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -157,11 +182,12 @@ export const CoverPage = () => {
                   <p style={{ color: 'var(--text-muted)', marginBottom: '2rem', textAlign: 'left' }}>Fill out the form below and we'll get back to you.</p>
 
                   <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <input type="text" placeholder="Your Name" required style={{ width: '100%', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-main)', fontSize: '1rem', boxSizing: 'border-box' }} />
-                    <input type="email" placeholder="Email Address" required style={{ width: '100%', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-main)', fontSize: '1rem', boxSizing: 'border-box' }} />
-                    <input type="tel" placeholder="Phone Number" required style={{ width: '100%', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-main)', fontSize: '1rem', boxSizing: 'border-box' }} />
-                    <button type="submit" className="hero-glow-btn" style={{ width: '100%', marginTop: '1rem', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                      Submit Request
+                    <input type="text" name="name" placeholder="Your Name" required style={{ width: '100%', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-main)', fontSize: '1rem', boxSizing: 'border-box' }} />
+                    <input type="email" name="email" placeholder="Email Address" required style={{ width: '100%', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-main)', fontSize: '1rem', boxSizing: 'border-box' }} />
+                    <input type="tel" name="phone" placeholder="Phone Number" required style={{ width: '100%', padding: '1rem', borderRadius: '10px', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-main)', fontSize: '1rem', boxSizing: 'border-box' }} />
+                    <input type="hidden" name="from_name" value="Grubix Media Website" />
+                    <button type="submit" disabled={isSubmitting} className="hero-glow-btn" style={{ width: '100%', marginTop: '1rem', border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', fontFamily: 'inherit', opacity: isSubmitting ? 0.7 : 1 }}>
+                      {isSubmitting ? 'Submitting...' : 'Submit Request'}
                     </button>
                   </form>
                 </>
@@ -324,8 +350,8 @@ export const TeamExperience = () => {
         <motion.p variants={fadeIn} style={{ fontSize: '1.5rem', color: 'var(--text-muted)' }}>Brands Our Team Members Have Worked With</motion.p>
       </div>
 
-      <motion.div variants={fadeIn} className="marquee-container" style={{ marginBottom: '3rem' }}>
-        <div ref={ref} className={`marquee-content ${isInView ? 'animate-marquee' : ''}`}>
+      <motion.div ref={ref} variants={fadeIn} className="marquee-container" style={{ marginBottom: '3rem' }}>
+        <div className={`marquee-content ${isInView ? 'animate-marquee' : ''}`}>
           {[...logos, ...logos].map((logo, i) => {
             const isResCom = logo.includes('rescom_logo');
             return (

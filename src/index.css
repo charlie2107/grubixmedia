@@ -428,6 +428,9 @@ h1, h2, h3, h4, h5, h6 {
   .portfolio-card { aspect-ratio: 16/9; }
   .cta-button { font-size: 1rem !important; padding: 0.75rem 1.25rem !important; width: 100%; text-align: center; justify-content: center; margin-bottom: 0.5rem; }
   
+  .marquee-item { width: 200px; height: 120px; padding: 1rem; }
+  .marquee-item img { max-height: 80px; }
+  
   .site-header { 
     padding: 1rem 1.5rem 3rem 1.5rem; 
   }
