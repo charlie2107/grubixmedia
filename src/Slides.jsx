@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import {
   TrendingUp, Search, Share2, Video,
   Megaphone, Target, Users, PlayCircle,
@@ -89,7 +89,7 @@ export const CoverPage = () => {
   };
 
   return (
-    <motion.div className="center-content" initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
+    <motion.div className="center-content" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative' }}>
       <h2 className="sr-only">Best Digital Marketing Agency in Patiala</h2>
       <motion.h1
         variants={fadeIn}
@@ -175,7 +175,7 @@ export const CoverPage = () => {
 };
 
 export const AboutUs = () => (
-  <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+  <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
     <motion.h2 variants={fadeIn} style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '2rem' }}>WHO WE ARE</motion.h2>
 
     <motion.div variants={fadeIn} style={{ maxWidth: '800px', textAlign: 'center' }}>
@@ -208,7 +208,7 @@ export const OurServices = () => {
   ];
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <motion.h2 variants={fadeIn} style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '3rem', textAlign: 'center' }}>WHAT WE DO</motion.h2>
 
       <div className="grid-4">
@@ -235,7 +235,7 @@ export const WhyChooseUs = () => {
   ];
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <motion.h2 variants={fadeIn} style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '3rem' }}>WHY GRUBIX?</motion.h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -272,16 +272,16 @@ export const WhyChooseUs = () => {
 
 export const OurTeam = () => {
   const team = [
-    { name: 'Krishna', role: 'E-commerce Executive', img: '/Team/krishna_ecom_creator.png' },
-    { name: 'Shubham', role: 'Digital Marketing Executive', img: '/Team/Shubham_dm_executive.jpeg' },
-    { name: 'Davinder', role: 'Video Editor', img: '/Team/davinder_videoeditor.png' },
-    { name: 'Parish', role: 'Graphic Designer', img: '/Team/parish_graphicdesigner.jpg' },
-    { name: 'Tarik', role: 'Video Editor', img: '/Team/Tarik_Video_Editor.png' },
-    { name: 'Sahil', role: 'Paid Ads Specialist', img: '/Team/sahil_paid_adsspecialist.jpg' }
+    { name: 'Mr. Krishna', role: 'E-commerce Executive', img: '/Team/krishna_ecom_creator.png' },
+    { name: 'Mr. Shubham', role: 'Digital Marketing Executive', img: '/Team/Shubham_dm_executive.jpeg' },
+    { name: 'Mr. Davinder', role: 'Video Editor', img: '/Team/davinder_videoeditor.png' },
+    { name: 'Mr. Parish', role: 'Graphic Designer', img: '/Team/parish_graphicdesigner.jpg' },
+    { name: 'Mr. Tarik', role: 'Video Editor', img: '/Team/Tarik_Video_Editor.png' },
+    { name: 'Mr. Sahil', role: 'Paid Ads Specialist', img: '/Team/sahil_paid_adsspecialist.jpg' }
   ];
 
   return (
-    <motion.div className="center-content" initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+    <motion.div className="center-content" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
       <motion.h2 variants={fadeIn} style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '4rem', textAlign: 'center' }}>MEET OUR TEAM</motion.h2>
 
       <div className="team-grid">
@@ -300,25 +300,32 @@ export const OurTeam = () => {
 };
 
 export const TeamExperience = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
   const logos = [
     '/clients Logos/Bluesky_immigration.png',
     '/clients Logos/carl_jr.png',
-    '/clients Logos/chai_nagri.png',
     '/clients Logos/js motors and tyres (2).png',
     '/clients Logos/pro_ultimate_gym logo.png',
     '/clients Logos/rescom_logo.png',
-    '/clients Logos/uitfx.png'
+    '/clients Logos/uitfx.png',
+    '/clients Logos/beyond wipes.jpg',
+    '/clients Logos/naseebo.png',
+    '/clients Logos/rangaai.png',
+    '/clients Logos/sdfurniture.png',
+    '/clients Logos/wild-west-charters-logo.png'
   ];
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
         <motion.h2 variants={fadeIn} style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '1rem' }}>OUR TEAM'S EXPERIENCE</motion.h2>
         <motion.p variants={fadeIn} style={{ fontSize: '1.5rem', color: 'var(--text-muted)' }}>Brands Our Team Members Have Worked With</motion.p>
       </div>
 
       <motion.div variants={fadeIn} className="marquee-container" style={{ marginBottom: '3rem' }}>
-        <div className="marquee-content">
+        <div ref={ref} className={`marquee-content ${isInView ? 'animate-marquee' : ''}`}>
           {[...logos, ...logos].map((logo, i) => {
             const isResCom = logo.includes('rescom_logo');
             return (
@@ -349,7 +356,7 @@ export const PortfolioShowcase = () => {
   ];
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <motion.h2 variants={fadeIn} style={{ fontSize: '3rem', color: 'var(--primary)', marginBottom: '3rem' }}>CLIENT RESULTS & WORK</motion.h2>
 
       <div className="grid-3">
@@ -368,7 +375,7 @@ export const PortfolioShowcase = () => {
 };
 
 export const LetGrow = () => (
-  <motion.div initial="hidden" animate="visible" variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+  <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
     <motion.div variants={fadeIn} style={{ width: '120px', height: '120px', background: 'var(--primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', boxShadow: '0 20px 40px rgba(20, 131, 59, 0.3)' }}>
       <TrendingUp size={64} color="white" />
     </motion.div>
