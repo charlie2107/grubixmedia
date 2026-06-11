@@ -1,5 +1,6 @@
-
+import { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import { 
   CoverPage, AboutUs, OurServices, WhyChooseUs, 
   OurTeam, TeamExperience, LetGrow, OurPricing 
@@ -40,6 +41,8 @@ function PricingPage() {
 }
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="main-container">
       {/* Animated Background */}
@@ -48,10 +51,11 @@ function App() {
 
       {/* Header */}
       <header className="site-header" style={{ alignItems: 'flex-start' }}>
-        <Link to="/" style={{ pointerEvents: 'auto' }}>
+        <Link to="/" style={{ pointerEvents: 'auto' }} onClick={() => setIsMenuOpen(false)}>
           <img src="/grubix_media_logo2.png" alt="Grubix Media" className="logo" />
         </Link>
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        
+        <div className="desktop-menu" style={{ display: 'flex', gap: '1rem' }}>
           <Link to="/blog" className="cta-button" style={{ pointerEvents: 'auto', padding: '0.75rem 1.5rem', fontSize: '1rem', marginTop: '1rem', background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--border-color)', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
             Blog
           </Link>
@@ -59,7 +63,28 @@ function App() {
             View Pricing
           </Link>
         </div>
+
+        {/* Mobile Toggle Button */}
+        <button 
+          className="mobile-menu-btn" 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          style={{ pointerEvents: 'auto', background: 'none', border: 'none', cursor: 'pointer', marginTop: '1rem', padding: '0.5rem' }}
+        >
+          {isMenuOpen ? <X size={32} color="var(--primary)" /> : <Menu size={32} color="var(--primary)" />}
+        </button>
       </header>
+
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="mobile-menu-overlay" style={{ pointerEvents: 'auto' }}>
+          <Link to="/blog" className="cta-button mobile-link" onClick={() => setIsMenuOpen(false)}>
+            Blog
+          </Link>
+          <Link to="/pricing" className="cta-button mobile-link" onClick={() => setIsMenuOpen(false)}>
+            View Pricing
+          </Link>
+        </div>
+      )}
 
       {/* Routes */}
       <Routes>
