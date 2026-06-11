@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import {
   TrendingUp, Search, Share2, Video,
-  Megaphone, Target, Users, PlayCircle,
-  Briefcase, Mail, ArrowRight, Layout, CheckCircle, Code, Phone, X, ShoppingCart
+  Target, Users,
+  Mail, Layout, CheckCircle, Code, Phone, X
 } from 'lucide-react';
 
 const InstagramIcon = ({ size = 24, color = "currentColor" }) => (
@@ -43,7 +43,7 @@ const CatchyHeroText = () => {
       setIndex((prev) => (prev + 1) % quotes.length);
     }, 4500);
     return () => clearInterval(interval);
-  }, []);
+  }, [quotes.length]);
 
   return (
     <motion.div variants={fadeIn} style={{ minHeight: '100px', marginBottom: '3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 1rem' }}>

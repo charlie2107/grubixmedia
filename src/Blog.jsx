@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, Calendar, User, Clock, CheckCircle } from 'lucide-react';
+import { ChevronLeft, Calendar, User, Clock } from 'lucide-react';
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
