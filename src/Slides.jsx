@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 import {
   TrendingUp, Search, Share2, Video,
   Megaphone, Target, Users, PlayCircle,
-  Briefcase, Mail, ArrowRight, Layout, CheckCircle, Code, Phone, X
+  Briefcase, Mail, ArrowRight, Layout, CheckCircle, Code, Phone, X, ShoppingCart
 } from 'lucide-react';
 
 const InstagramIcon = ({ size = 24, color = "currentColor" }) => (
@@ -83,7 +83,7 @@ export const CoverPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const formData = new FormData(e.target);
     formData.append("access_key", "cb85c227-95a8-4e45-9fc6-4607dc2a800c");
     formData.append("subject", "New Consultation Request - Grubix Media Website");
@@ -93,9 +93,9 @@ export const CoverPage = () => {
         method: "POST",
         body: formData
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
         setIsSubmitted(true);
         setTimeout(() => {
@@ -427,3 +427,83 @@ export const LetGrow = () => (
     </motion.div>
   </motion.div>
 );
+
+export const OurPricing = () => {
+  return (
+    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={staggerContainer} style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <motion.h2 variants={fadeIn} style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '2rem', textAlign: 'center' }}>OUR PRICING</motion.h2>
+
+      <div className="pricing-grid">
+        {/* Starter Plan */}
+        <motion.div variants={fadeIn} className="pricing-card">
+          <div className="pricing-header">
+            <h3>STARTER PLAN</h3>
+            <div className="price">₹13,999 <span>/ MONTH</span></div>
+            <p>Perfect for businesses looking to establish a professional online presence.</p>
+          </div>
+
+          <div className="pricing-body">
+            <h4>Content Breakdown</h4>
+            <ul>
+              <li><CheckCircle size={18} color="var(--primary)" /> 2 Reels per Week (8 Reels Monthly)</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> 2 Posts per Week (8 Posts Monthly)</li>
+            </ul>
+
+            <h4>What's Included</h4>
+            <ul>
+              <li><CheckCircle size={18} color="var(--primary)" /> 3 Content Shoots per Month</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Professional Video Editing</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Creative Graphic Designing</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Social Media Management</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Meta Ads Management</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Lead Generation</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Monthly Performance Report</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Content Strategy & Planning</li>
+            </ul>
+          </div>
+          <button className="pricing-btn" onClick={() => window.location.href = '/'}>Get Started</button>
+        </motion.div>
+
+        {/* Growth Plan */}
+        <motion.div variants={fadeIn} className="pricing-card popular">
+          <div className="popular-badge">RECOMMENDED</div>
+          <div className="pricing-header">
+            <h3>GROWTH PLAN</h3>
+            <div className="price">₹18,999 <span>/ MONTH</span></div>
+            <p>Designed for businesses focused on SEO, generating leads, and accelerating organic growth.</p>
+          </div>
+
+          <div className="pricing-body">
+            <h4>Content Breakdown</h4>
+            <ul>
+              <li><CheckCircle size={18} color="var(--primary)" /> 3 Reels per Week (12 Reels Monthly)</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> 3 Posts per Week (12 Posts Monthly)</li>
+            </ul>
+
+            <h4>What's Included</h4>
+            <ul>
+              <li><CheckCircle size={18} color="var(--primary)" /> 3-4 Content Shoots per Month</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Professional Video Editing</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Creative Graphic Designing</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Social Media Management</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Meta Ads Management</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> SEO Optimization</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Lead Generation Campaigns</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Monthly Performance Report</li>
+              <li><CheckCircle size={18} color="var(--primary)" /> Dedicated Content Strategy</li>
+            </ul>
+          </div>
+          <button className="pricing-btn popular-btn" onClick={() => window.location.href = '/'}>Scale Now</button>
+        </motion.div>
+
+      </div>
+
+      <motion.div variants={fadeIn} style={{ marginTop: '1rem', width: '100%', maxWidth: '800px', textAlign: 'center' }}>
+        <p className="pricing-note" style={{ borderTop: 'none', fontSize: '1rem' }}><em>*Note:</em> Ad spend/budget is charged separately and is not included in the above packages.</p>
+        <p style={{ marginTop: '1.5rem', fontSize: '0.95rem', color: 'var(--text-muted)', fontStyle: 'italic', background: 'rgba(20, 131, 59, 0.05)', padding: '1rem', borderRadius: '12px', display: 'inline-block' }}>
+          😅 P.S. We know our pricing is very low, but don't judge us... we are just starting out!
+        </p>
+      </motion.div>
+    </motion.div>
+  );
+};
